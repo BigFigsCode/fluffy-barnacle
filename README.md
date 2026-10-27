@@ -78,10 +78,17 @@ When the API runs in Development mode, Swagger UI is available at `/swagger` for
 ### 1. Start the API
 
 1. In `InsuranceAPI/appsettings.json`, set `ConnectionStrings:InsuranceConnection` to point at your SQL Server instance.
-2. Create the database and run the API:
+2. Set a JWT signing key. The key is a secret, so it isn't kept in `appsettings.json`. Store it with .NET user secrets, which keeps it outside the repo:
 
    ```bash
    cd InsuranceAPI
+   dotnet user-secrets set "Jwt:Key" "$(openssl rand -base64 48)"
+   ```
+
+   The key has to be at least 32 bytes long, and the API won't start without one.
+3. Create the database and run the API:
+
+   ```bash
    dotnet tool install --global dotnet-ef   # first time only
    dotnet ef database update
    dotnet run --launch-profile https
@@ -113,4 +120,4 @@ The project is set up for Azure:
 - **API**: Azure App Service.
 - **Frontend**: Azure Static Web Apps. `public/staticwebapp.config.json` sends all routes to `index.html` so Angular's client-side routing works.
 
-When you deploy, replace the development JWT signing key in `appsettings.json` with a strong secret stored in App Service configuration or Azure Key Vault. If someone knows the signing key, they can forge tokens, including admin tokens.
+In the App Service, set the JWT signing key as an app setting named `Jwt__Key` (Settings → Environment variables), or keep it in Azure Key Vault. Use a long random value and don't commit it. If someone knows the signing key, they can forge tokens, including admin tokens.

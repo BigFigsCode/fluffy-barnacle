@@ -36,6 +36,17 @@ builder.Services.AddDbContext<InsuranceDbContext>(options =>
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
+// The signing key is a secret, so it is never stored in appsettings.json.
+// Locally it comes from user secrets; in Azure it comes from the Jwt__Key app setting.
+var jwtKey = jwtSettings["Key"] ?? string.Empty;
+if (string.IsNullOrWhiteSpace(jwtKey) || Encoding.UTF8.GetByteCount(jwtKey) < 32)
+{
+    throw new InvalidOperationException(
+        "Jwt:Key is missing or shorter than 32 bytes. Set it with " +
+        "'dotnet user-secrets set \"Jwt:Key\" \"<secret>\"' locally, " +
+        "or the 'Jwt__Key' app setting in Azure.");
+}
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -51,7 +62,7 @@ builder.Services
             ValidAudience = jwtSettings["Audience"],
 
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtSettings["Key"]!)
+                Encoding.UTF8.GetBytes(jwtKey)
             ),
 
             ClockSkew = TimeSpan.Zero//Removes the default expiration grace period
