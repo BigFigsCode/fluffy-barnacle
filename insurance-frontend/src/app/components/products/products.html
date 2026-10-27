@@ -1,0 +1,49 @@
+<section class="products-page">
+  <div class="page-header">
+    <span class="eyebrow">INSURANCE MANAGEMENT</span>
+    <h1>Find the right coverage</h1>
+    <p>Explore our available insurance products and protect what matters most.</p>
+  </div>
+
+  @if (loading) {
+  <p class="message">Loading insurance products...</p>
+  } @else if (errorMessage) {
+  <p class="message error">{{ errorMessage }}</p>
+  } @else {
+  <div class="product-grid">
+    @for (product of products; track product.productId) {
+    <article class="product-card">
+      <div class="card-top">
+        <span class="product-icon">🛡️</span>
+        <span class="status" [class.inactive]="!product.isActive">
+          {{ product.isActive ? 'Available' : 'Unavailable' }}
+        </span>
+      </div>
+
+      <h2>{{ product.name }}</h2>
+      <p class="description">{{ product.description }}</p>
+
+      <div class="card-footer">
+        <div>
+          <span class="price-label">Base premium</span>
+          <strong>{{ product.basePremium | currency:'USD' }}</strong>
+        </div>
+        <button type="button" [disabled]="!product.isActive || purchasingProductId !== null"
+          (click)="purchasePolicy(product.productId)">
+          {{ purchasingProductId === product.productId
+          ? 'Processing...'
+          : 'Request Coverage' }}
+        </button>
+      </div>
+    </article>
+    } @empty {
+    <p class="message">No insurance products found.</p>
+
+
+    }
+  </div>
+  @if (purchaseError) {
+    <p class="error">{{ purchaseError }}</p>
+    }
+  }
+</section>

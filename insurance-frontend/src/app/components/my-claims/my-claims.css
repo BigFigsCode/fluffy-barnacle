@@ -1,0 +1,112 @@
+.claims-page {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #0f172a;
+}
+
+.page-header {
+  margin-bottom: 35px;
+}
+
+.eyebrow {
+  color: #4361ee;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-size: 42px;
+  margin: 15px 0;
+}
+
+.page-header p {
+  color: #64748b;
+  font-size: 18px;
+}
+
+.claim-form,
+.claim-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.05);
+}
+
+.claim-form {
+  max-width: 650px;
+  margin-bottom: 40px;
+}
+
+.claim-form h2 {
+  margin-top: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+label {
+  font-weight: 600;
+}
+
+select,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+
+button {
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #304bd2;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.claims-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.claim-card h3 {
+  color: #4361ee;
+}
+
+.claim-card p {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.error {
+  color: #dc2626;
+}
+
+.success {
+  color: #15803d;
+}

@@ -1,0 +1,45 @@
+
+.dashboard {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.policy-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.policy-card h2 {
+  color: #2563eb;
+  margin-bottom: 18px;
+}
+
+.policy-card p {
+  color: #334155;
+  margin: 12px 0;
+}
+
+.error {
+  color: #dc2626;
+}

@@ -1,0 +1,57 @@
+<div class="register-page">
+  <div class="register-card">
+
+    <div class="register-header">
+      <div class="shield-icon">🛡️</div>
+      <h1>Create Account</h1>
+      <p>Join Insurance Management to explore coverage.</p>
+    </div>
+
+    <form (ngSubmit)="register()" #registerForm="ngForm">
+
+      <div class="name-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input id="firstName" name="firstName" type="text" [(ngModel)]="firstName" required autocomplete="given-name"
+            placeholder="First name" />
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" name="lastName" type="text" [(ngModel)]="lastName" required autocomplete="family-name"
+            placeholder="Last name" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" [(ngModel)]="email" required email autocomplete="email"
+          placeholder="you@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" [(ngModel)]="password" required minlength="8"
+          autocomplete="new-password" placeholder="At least 8 characters" />
+      </div>
+
+      @if (errorMessage) {
+      <p class="error-message">{{ errorMessage }}</p>
+      }
+      <p>First Name: {{ registerForm.controls['firstName']?.valid }}</p>
+      <p>Last Name: {{ registerForm.controls['lastName']?.valid }}</p>
+      <p>Email: {{ registerForm.controls['email']?.valid }}</p>
+      <p>Password: {{ registerForm.controls['password']?.valid }}</p>
+      <button type="submit" class="register-btn" [disabled]="registerForm.invalid || loading">
+        {{ loading ? 'Creating Account...' : 'Create Account' }}
+      </button>
+
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a routerLink="/login">Sign In</a>
+    </p>
+
+  </div>
+</div>

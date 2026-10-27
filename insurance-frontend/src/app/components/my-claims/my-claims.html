@@ -1,0 +1,70 @@
+<section class="claims-page">
+  <div class="page-header">
+    <span class="eyebrow">INSURANCE MANAGEMENT</span>
+    <h1>My Insurance Claims</h1>
+    <p>Submit and track your insurance claims.</p>
+  </div>
+
+  <div class="claim-form">
+    <h2>Submit a New Claim</h2>
+
+    @if (successMessage) {
+    <p class="success">{{ successMessage }}</p>
+    }
+
+    @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+    }
+
+    <form (ngSubmit)="submitClaim()">
+      <label for="policy">Select Active Policy</label>
+
+      <select id="policy" name="policyId" [(ngModel)]="selectedPolicyId" required>
+        <option [ngValue]="null">Choose a policy</option>
+
+        @for (policy of policies; track policy.policyId) {
+        <option [ngValue]="policy.policyId">
+          Policy #{{ policy.policyId }} - {{ policy.productName }}
+        </option>
+        }
+      </select>
+
+      @if (!loading && policies.length === 0) {
+      <p class="error">You have no active policies eligible for claims.</p>
+      }
+
+      <label for="description">Claim Description</label>
+
+      <textarea id="description" name="description" [(ngModel)]="description" maxlength="1000" rows="5" required
+        placeholder="Describe what happened..."></textarea>
+
+      <button type="submit" [disabled]="submitting || !selectedPolicyId || !description.trim()">
+        {{ submitting ? 'Submitting...' : 'Submit Claim' }}
+      </button>
+    </form>
+  </div>
+
+  <h2 class="section-title">Claim History</h2>
+
+  @if (loading) {
+  <p>Loading claims...</p>
+  } @else if (claims.length === 0) {
+  <p>No claims found.</p>
+  } @else {
+  <div class="claims-grid">
+    @for (claim of claims; track claim.claimId) {
+    <article class="claim-card">
+      <h3>Claim #{{ claim.claimId }}</h3>
+
+      <p><strong>Policy:</strong> #{{ claim.policyId }}</p>
+      <p><strong>Description:</strong> {{ claim.description }}</p>
+      <p><strong>Status:</strong> {{ getStatus(claim.status) }}</p>
+      <p>
+        <strong>Submitted:</strong>
+        {{ claim.dateSubmitted | date:'mediumDate' }}
+      </p>
+    </article>
+    }
+  </div>
+  }
+</section>

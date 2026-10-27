@@ -1,0 +1,39 @@
+<div class="dashboard">
+  <h1>My Insurance Policies</h1>
+  <p class="subtitle">Manage and view your insurance coverage.</p>
+
+  @if (loading) {
+  <p>Loading policies...</p>
+  }
+
+  @if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (!loading && !errorMessage && policies.length === 0) {
+  <p>You don't have any insurance policies yet.</p>
+  }
+
+  <div class="policy-grid">
+    @for (policy of policies; track policy.policyId) {
+    <div class="policy-card">
+      <h2>Policy #{{ policy.policyId }}</h2>
+
+      <p><strong>Product:</strong> {{ policy.productName }}</p>
+
+      <p>
+        <strong>Status:</strong>
+        {{ policy.status === 1 ? 'Active' : 'Pending' }}
+      </p>
+
+      <p><strong>Start Date:</strong>
+        {{ policy.startDate | date:'mediumDate' }}
+      </p>
+
+      <p><strong>End Date:</strong>
+        {{ policy.endDate | date:'mediumDate' }}
+      </p>
+    </div>
+    }
+  </div>
+</div>

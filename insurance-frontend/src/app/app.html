@@ -1,0 +1,48 @@
+@if (isLoggedIn()) {
+<nav class="navbar">
+  <div class="nav-container">
+
+    <a routerLink="/products" class="brand">
+      <span class="brand-icon">🛡️</span>
+      Insurance Management
+    </a>
+
+
+    <div class="nav-links">
+
+      @if (getRole() === 'Admin') {
+      <a routerLink="/admin" routerLinkActive="active">
+        Admin Dashboard
+      </a>
+
+      <a routerLink="/products" routerLinkActive="active">
+        Products
+      </a>
+      }
+
+      @if (getRole() === 'Customer') {
+      <a routerLink="/products" routerLinkActive="active">
+        Products
+      </a>
+
+      <a routerLink="/my-policies" routerLinkActive="active">
+        My Policies
+      </a>
+
+      <a routerLink="/my-claims" routerLinkActive="active">
+        My Claims
+      </a>
+      }
+
+      <button type="button" class="logout-btn" (click)="logout()">
+        Logout
+      </button>
+
+    </div>
+
+
+  </div>
+</nav>
+}
+
+<router-outlet></router-outlet>

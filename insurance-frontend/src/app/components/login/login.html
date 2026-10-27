@@ -1,0 +1,32 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="brand">🛡️ INSURANCE MANAGEMENT</div>
+
+    <h1>Welcome back</h1>
+    <p class="subtitle">Sign in to manage your insurance policies and claims.</p>
+
+    <form (ngSubmit)="onLogin()">
+      <p class="register-link">
+        Don't have an account?
+        <a routerLink="/register">Create Account</a>
+      </p>
+      <label for="email">Email address</label>
+      <input id="email" type="email" name="email" [(ngModel)]="email" placeholder="Enter your email"
+        autocomplete="email" required />
+
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" [(ngModel)]="password" placeholder="Enter your password"
+        autocomplete="current-password" required />
+
+      @if (errorMessage) {
+      <p class="error">{{ errorMessage }}</p>
+      }
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+      </button>
+    </form>
+
+    <p class="footer-text">Your coverage, all in one place.</p>
+  </div>
+</div>

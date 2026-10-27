@@ -1,0 +1,134 @@
+<section class="admin-page">
+  <header class="page-header">
+    <span class="eyebrow">ADMINISTRATION</span>
+    <h1>Admin Dashboard</h1>
+    <p>Manage insurance policies and customer claims.</p>
+  </header>
+
+  @if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (successMessage) {
+  <p class="success">{{ successMessage }}</p>
+  }
+
+  @if (loading) {
+  <p>Loading admin data...</p>
+  } @else {
+
+  <div class="stats">
+    <div class="stat-card">
+      <span>Total Policies</span>
+      <strong>{{ policies.length }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Pending Policies</span>
+      <strong>{{ pendingPoliciesCount }}</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Total Claims</span>
+      <strong>{{ claims.length }}</strong>
+    </div>
+  </div>
+
+  <h2>Insurance Policies</h2>
+
+  <div class="card-grid">
+    @for (policy of policies; track policy.policyId) {
+    <article class="record-card">
+      <h3>Policy #{{ policy.policyId }}</h3>
+      <p><strong>Customer ID:</strong> {{ policy.userId }}</p>
+      <p><strong>Product:</strong> {{ policy.productName }}</p>
+      <p><strong>Status:</strong> {{ getPolicyStatus(policy.status) }}</p>
+
+      @if (policy.status === 0) {
+      <button type="button" [disabled]="processing" (click)="activatePolicy(policy.policyId)">
+        Activate Policy
+      </button>
+      }
+    </article>
+    } @empty {
+    <p>No policies found.</p>
+    }
+  </div>
+
+  <h2>Customer Claims</h2>
+
+  <div class="card-grid">
+    @for (claim of claims; track claim.claimId) {
+    <article class="record-card">
+      <h3>Claim #{{ claim.claimId }}</h3>
+      <p><strong>Customer ID:</strong> {{ claim.userId }}</p>
+      <p><strong>Policy:</strong> #{{ claim.policyId }}</p>
+      <p><strong>Description:</strong> {{ claim.description }}</p>
+      <p><strong>Status:</strong> {{ getClaimStatus(claim.status) }}</p>
+
+      @if (claim.status === 0) {
+      <button type="button" [disabled]="processing" (click)="updateClaimStatus(claim.claimId, 1)">
+        Mark Under Review
+      </button>
+      }
+
+      @if (claim.status === 1) {
+      <div class="actions">
+        <button type="button" [disabled]="processing" (click)="updateClaimStatus(claim.claimId, 2)">
+          Approve
+        </button>
+
+        <button type="button" class="danger" [disabled]="processing" (click)="updateClaimStatus(claim.claimId, 3)">
+          Deny
+        </button>
+      </div>
+      }
+    </article>
+    } @empty {
+    <p>No claims found.</p>
+    }
+  </div>
+
+  <!-- Manage Insurance Products -->
+  <section class="management-section">
+    <h2>Manage Insurance Products</h2>
+
+    <div class="card-grid">
+      @for (product of products; track product.productId) {
+      <article class="record-card">
+
+        <h3>{{ product.name }}</h3>
+
+        <p>{{ product.description }}</p>
+
+        <p>
+          <strong>Premium:</strong>
+          {{ product.basePremium | currency }}
+        </p>
+
+        <p>
+          <strong>Status:</strong>
+          {{ product.isActive ? 'Active' : 'Inactive' }}
+        </p>
+
+
+        @if (product.isActive) {
+        <button type="button" class="danger" [disabled]="processing" (click)="deactivateProduct(product.productId)">
+          Deactivate Product
+        </button>
+        } @else {
+        <button type="button" [disabled]="processing" (click)="activateProduct(product.productId)">
+          Reactivate Product
+        </button>
+        }
+
+
+      </article>
+      } @empty {
+      <p>No insurance products found.</p>
+      }
+    </div>
+  </section>
+
+  }
+</section>
