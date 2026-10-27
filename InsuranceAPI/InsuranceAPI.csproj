@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>insuranceapi-7c3e9a52-4f1d-4b8e-9a6f-2d5c8e1b0f47</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
